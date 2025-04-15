@@ -1,0 +1,12 @@
+# IDEs
+.idea/
+
+# Docker e arquivos sensíveis
+.env
+
+# Logs
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
