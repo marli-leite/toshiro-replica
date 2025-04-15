@@ -1,0 +1,37 @@
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: apache_toshiro
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: mysql_toshiro
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: toshiro_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./banco.sql:/docker-entrypoint-initdb.d/banco.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_toshiro
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    depends_on:
+      - db
